@@ -8,8 +8,6 @@ workflows:
           chart: helm/expresscart
           cluster-name: k8s
           release-name: manoj-release
-    steps:
-    - install-helm-client
     - run:
         command: |
           helm repo update

@@ -1,8 +1,8 @@
 version: 2.1
+commands: 2.1
 jobs:
-  build:
-    steps:
-      - checkout
-      - run:
-          name: testing
-          command: uname -a
+   build:
+     steps:
+	   - run:
+	       name: testing
+		   command: uname -a

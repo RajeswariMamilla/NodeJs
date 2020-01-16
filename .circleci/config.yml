@@ -4,6 +4,4 @@ jobs:
     machine:
       image: ubuntu-1604:201903-01
     steps:
-      - run: git clone https://github.com/Manu7gr/NodeJs.git
-      - run: cd NodeJs
-      - run: helm install --debug helm/expresscart --name manoj
+      - run: helm install --debug .helm/expresscart --name manoj

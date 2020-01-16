@@ -1,8 +1,11 @@
-version: 2.1
-commands: 2.1
+version: 2
 jobs:
-   build:
-     steps:
-       - run:
-           name: testing
-           command: 'uname -a'
+  build:
+    docker:
+      - image: circleci/node:7.10-browsers
+        environment:
+          CHROME_BIN: "/usr/bin/google-chrome"
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test

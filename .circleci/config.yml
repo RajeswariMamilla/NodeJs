@@ -13,6 +13,6 @@ workflows:
       - aws-eks/install-helm-chart:
           chart: helm/expresscart
           cluster-name: k8s
-          release-name: Staging
+          release-name: staging
           requires:
             - aws-ecr/build_and_push_image 

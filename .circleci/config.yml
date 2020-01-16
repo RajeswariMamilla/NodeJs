@@ -13,24 +13,4 @@ commands:
     - run:
         name: Configure Kubernetes Client
         command: |
-          aws eks update-kubeconfig --name  << parameters.cluster >>
-          kubectl config set-context $(kubectl config current-context) --namespace << parameters.namespace >>
-          # sanity check
-          kubectl get services
-
-  init-helm:
-    parameters:
-      chart:
-        type: string
-    steps:
-    - run:
-        name: Initialise Helm
-        command: |
-          helm init --client-only
-          helm list | grep << parameters.chart >>
-          # download any missing subcharts
-          helm dep update
-executors:
-  default:
-    docker:
-      - image: civicteam/circle-aws-kube
+         helm install --debug .chart/expresscart --name manoj

@@ -1,3 +1,4 @@
+version: 2.1
 executors:
   machine:
 jobs:
@@ -9,9 +10,3 @@ jobs:
           name: Run build script
           command: |
             helm install --debug charts/expresscart --name manoj
-workflows:
-  version: 2
-  deploy:
-    jobs:
-      - deploy:
-      

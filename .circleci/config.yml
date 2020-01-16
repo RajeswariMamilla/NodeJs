@@ -1,32 +1,19 @@
+orbs:
+  aws-eks: circleci/aws-eks@0.2.3
 version: 2.1
-description: |
-  Deploy a helm chart on AWS EKS
-commands:
-  setup-kube:
-    parameters:
-      cluster:
-        type: string
-      namespace:
-        default: default
-        type: string
-    steps:
-    - run:
-        name: Configure Kubernetes Client
-        command: |
-         aws eks update-kubeconfig --name  << parameters.cluster >>
-          kubectl config set-context $(kubectl config current-context) --namespace << parameters.namespace >>
-          # sanity check
-          kubectl get service
-         helm install --debug .chart/expresscart --name manoj
-  init-helm:
-    parameters:
-      chart:
-        type: string
-    steps:
-    - run:
-        name: Initialise Helm
-        command: |
-          helm init --client-only
-          helm list | grep << parameters.chart >>
-          # download any missing subcharts
-          helm dep update
+workflows:
+  deployment:
+    jobs:
+      - aws-eks/create-cluster:
+          cluster-name: k8s
+      - aws-eks/install-helm-on-cluster:
+          cluster-name: k8s
+          enable-cluster-wide-admin-access: true
+          requires:
+            - aws-eks/create-cluster
+      - aws-eks/install-helm-chart:
+          chart: helm/expresscart
+          cluster-name: k8s
+          release-name: manoj-release
+          requires:
+            - aws-eks/install-helm-on-cluster

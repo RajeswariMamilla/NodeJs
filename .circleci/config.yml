@@ -5,10 +5,7 @@ workflows:
   deployment:
     jobs:
       - aws-eks/install-helm-chart:
-          chart: helm/expresscart
+          chart: .helm/expresscart
           cluster-name: k8s
           release-name: manoj-release
-    - run:
-        command: |
-          helm repo update
-        name: Update repository
+ 

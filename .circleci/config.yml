@@ -1,51 +1,18 @@
 version: 2.1
-description: |
-  Deploy a helm chart on AWS EKS
-commands:
-  setup-kube:
-    parameters:
-      cluster:
-        type: string
-      namespace:
-        default: default
-        type: string
+orbs:
+  helm-deploy: perxtech/helm-deploy@0.0.3
+jobs:
+  deploy:
+    executor: helm-deploy/default
     steps:
-    - run:
-        name: Configure Kubernetes Client
-        command: |
-          aws eks update-kubeconfig --name  << parameters.cluster >>
-          kubectl config set-context $(kubectl config current-context) --namespace << parameters.namespace >>
-          # sanity check
-          kubectl get services
-
-  init-helm:
-    parameters:
-      chart:
-        type: string
-    steps:
-    - run:
-        name: Initialise Helm
-        command: |
-          helm init --client-only
-          helm list | grep << parameters.chart >>
-          # download any missing subcharts
-          helm dep update
-  upgrade:
-    parameters:
-      helmparams:
-        default:
-        type: string
-      chart:
-        type: string
-    steps:
-    - run:
-        name: Update Cluster
-        command: |
-          helm upgrade << parameters.helmparams>> << parameters.chart >> . || export STATUS=$?
-          # cleanup
-          [ ${STATUS:-0} -eq 0 ] || helm rollback << parameters.chart >> $(helm history << parameters.chart >> | grep DEPLOYED | awk '{print $1}')
-          exit ${STATUS}
-executors:
-  default:
-    docker:
-      - image: civicteam/circle-aws-kube
+      - run:
+          command: |
+            echo 'export HELM_REPO_URL=https://charts.example.com' >> $BASH_ENV
+      - helm-deploy/add-helm-repo:
+          helm_repo_name: my_repo
+      - helm-deploy/configure-kubectl
+      - helm-deploy/deploy:
+          helm_release: hello-world
+          helm_chart: my_repo/hello-world
+          helm_values: image.tag=v1.1
+          helm_extra_args: '--reuse-values'

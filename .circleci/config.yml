@@ -1,11 +1,36 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/node:7.10-browsers
-        environment:
-          CHROME_BIN: "/usr/bin/google-chrome"
+version: 2.1
+description: |
+  Deploy a helm chart on AWS EKS
+commands:
+  setup-kube:
+    parameters:
+      cluster:
+        type: string
+      namespace:
+        default: default
+        type: string
     steps:
-      - checkout
-      - run: npm install
-      - run: npm test
+    - run:
+        name: Configure Kubernetes Client
+        command: |
+          aws eks update-kubeconfig --name  << parameters.cluster >>
+          kubectl config set-context $(kubectl config current-context) --namespace << parameters.namespace >>
+          # sanity check
+          kubectl get services
+
+  init-helm:
+    parameters:
+      chart:
+        type: string
+    steps:
+    - run:
+        name: Initialise Helm
+        command: |
+          helm init --client-only
+          helm list | grep << parameters.chart >>
+          # download any missing subcharts
+          helm dep update
+executors:
+  default:
+    docker:
+      - image: civicteam/circle-aws-kube

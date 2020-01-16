@@ -10,6 +10,7 @@ workflows:
           repo: "${AWS_RESOURCE_MAHESH_PREFIX}"
           region: ${AWS_DEFAULT_REGION}
           tag: ${CIRCLE_BUILD_NUM}
+      - run: helm repo update
       - aws-eks/install-helm-chart:
           chart: helm/expresscart
           cluster-name: k8s

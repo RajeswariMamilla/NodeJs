@@ -1,6 +1,8 @@
 version: 2.1
 jobs:
-  steps:
+  build:
+    steps:
       - checkout
       - run:
+          name: testing
           command: uname -a

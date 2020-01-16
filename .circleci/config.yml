@@ -1,12 +1,7 @@
-version: 2.1
-executors:
-  machine:
+version: 2
 jobs:
-  deploy:
-    executor: machine
+  build:
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
-      - checkout
-      - run:
-          name: Run build script
-          command: |
-            helm install --debug charts/expresscart --name manoj
+      - run: helm install --debug chart/expresscart --name manoj

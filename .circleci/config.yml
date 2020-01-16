@@ -34,10 +34,6 @@ jobs:
 workflows:
   deployment:
     jobs:
-      - install-helm-on-cluster:
-          cluster-name: test-cluster
-          requires:
-            - aws-eks/create-cluster
       - install-helm-chart:
           cluster-name: test-cluster
           requires:

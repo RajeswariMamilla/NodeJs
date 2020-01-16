@@ -3,4 +3,5 @@ jobs:
   build:
     executor: working_directory	
     steps:
-      - run: echo mahesh
+      - run: 
+          command: echo mahesh

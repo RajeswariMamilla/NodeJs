@@ -8,4 +8,3 @@ workflows:
           chart: helm/expresscart
           cluster-name: k8s
           release-name: manoj-release
-      - run: helm update

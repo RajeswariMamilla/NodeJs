@@ -1,7 +1,3 @@
 version: 2.1
-jobs:
-  build:
-    executor: working_directory	
-    steps:
-      - run: 
-          command: echo mahesh
+jobs: 
+   command: echo mahesh

@@ -3,6 +3,6 @@ commands: 2.1
 jobs:
    build:
      steps:
-	   - run:
-	       name: testing
-		   command: uname -a
+       - run:
+           name: testing
+	   command: uname -a

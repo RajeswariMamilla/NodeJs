@@ -1,5 +1,6 @@
 version: 2.1
 jobs:
-  - deploy:
-    command: |
-      uname -a
+  steps:
+      - checkout
+      - run:
+          command: uname -a

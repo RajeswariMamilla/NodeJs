@@ -1,3 +1,17 @@
-version: 2.1
-jobs: 
-   command: echo mahesh
+executors:
+  machine:
+jobs:
+  deploy:
+    executor: machine
+    steps:
+      - checkout
+      - run:
+          name: Run build script
+          command: |
+            helm install --debug charts/expresscart --name manoj
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy:
+      

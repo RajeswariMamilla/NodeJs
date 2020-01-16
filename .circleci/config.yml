@@ -5,4 +5,4 @@ jobs:
      steps:
        - run:
            name: testing
-	   command: 'uname -a'
+           command: 'uname -a'

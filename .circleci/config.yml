@@ -4,12 +4,7 @@ version: 2.1
 workflows:
   deployment:
     jobs:
-      - aws-eks/install-helm-on-cluster:
-          cluster-name: k8s
-          enable-cluster-wide-admin-access: true
       - aws-eks/install-helm-chart:
           chart: helm/expresscart
           cluster-name: k8s
           release-name: manoj-release
-          requires:
-            - aws-eks/install-helm-on-cluster

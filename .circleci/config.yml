@@ -22,7 +22,7 @@ workflows:
                     enable-cluster-wide-admin-access: true
                     requires:
                       - aws-eks/create-cluster
-               install-helmchart:       
+              install-helmchart:       
                 - aws-eks/install-helm-chart:
                     chart: helm/expresscart
                     cluster-name: k8s
@@ -31,4 +31,3 @@ workflows:
                       - aws-eks/install-helm-on-cluster
           requires:
             - aws-ecr/build_and_push_image
-

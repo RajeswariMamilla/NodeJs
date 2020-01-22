@@ -24,5 +24,4 @@ workflows:
             release-name: staging
             requires:
               - aws-eks/install-helm-on-cluster
-          requires:
-            - aws-ecr/build_and_push_image  
+              - aws-ecr/build_and_push_image  

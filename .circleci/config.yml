@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@0.0.4
   aws-eks: circleci/aws-eks@0.2.3
-  helm: circleci/helm@0.2.3                    
+  helm: circleci/helm@0.2.3
+jobs:
   aws-eks/create-cluster:
     cluster-name: my-eks-helm-demo

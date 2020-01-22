@@ -12,6 +12,7 @@ workflows:
           region: ${AWS_DEFAULT_REGION}
           tag: ${CIRCLE_BUILD_NUM}
         - deployment:
+          workflows:
             jobs:
               create_cluster:              
                 - aws-eks/create-cluster:

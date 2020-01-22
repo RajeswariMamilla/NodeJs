@@ -5,12 +5,7 @@ orbs:
   helm: circleci/helm@0.2.3
 workflows:
     jobs:
-      build-and-push:
-        - aws-ecr/build_and_push_image:
-          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-          repo: "${rajeswari}"
-          region: ${AWS_DEFAULT_REGION}
-          tag: ${CIRCLE_BUILD_NUM}                    
+      build-and-push:                    
         - aws-eks/create-cluster:
             cluster-name: my-eks-helm-demo              
         - aws-eks/install-helm-on-cluster:

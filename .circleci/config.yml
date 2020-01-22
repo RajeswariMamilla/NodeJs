@@ -26,13 +26,5 @@ workflows:
                   release-name: staging
                   requires:
                     - aws-eks/install-helm-on-cluster
-             #- aws-eks/delete-helm-release:
-              #   cluster-name: my-eks-helm-demo
-               #  release-name: grafana-release
-                # requires:
-                 #  - aws-eks/install-helm-chart
-             #- aws-eks/delete-cluster:
-              #   cluster-name: my-eks-helm-demo
-               #  requires:
-                #   - aws-eks/delete-helm-release
+
 

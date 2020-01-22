@@ -13,18 +13,22 @@ workflows:
           tag: ${CIRCLE_BUILD_NUM}
         - deployment:
             jobs:
-              deploy:              
+              create_cluster:              
                 - aws-eks/create-cluster:
                     cluster-name: my-eks-helm-demo
+              install_helm:      
                 - aws-eks/install-helm-on-cluster:
                     cluster-name: my-eks-helm-demo
                     enable-cluster-wide-admin-access: true
                     requires:
                       - aws-eks/create-cluster
+               install-helmchart:       
                 - aws-eks/install-helm-chart:
                     chart: helm/expresscart
                     cluster-name: k8s
                     release-name: staging
                     requires:
                       - aws-eks/install-helm-on-cluster
+          requires:
+            - aws-ecr/build_and_push_image
 

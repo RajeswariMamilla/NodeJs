@@ -10,25 +10,19 @@ workflows:
           account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
           repo: "${rajeswari}"
           region: ${AWS_DEFAULT_REGION}
-          tag: ${CIRCLE_BUILD_NUM}
-        - deployment:
-          workflows:
-            jobs:
-              create_cluster:              
-                - aws-eks/create-cluster:
-                    cluster-name: my-eks-helm-demo
-              install_helm:      
-                - aws-eks/install-helm-on-cluster:
-                    cluster-name: my-eks-helm-demo
-                    enable-cluster-wide-admin-access: true
-                    requires:
-                      - aws-eks/create-cluster
-              install-helmchart:       
-                - aws-eks/install-helm-chart:
-                    chart: helm/expresscart
-                    cluster-name: k8s
-                    release-name: staging
-                    requires:
-                      - aws-eks/install-helm-on-cluster
+          tag: ${CIRCLE_BUILD_NUM}                    
+        - aws-eks/create-cluster:
+            cluster-name: my-eks-helm-demo              
+        - aws-eks/install-helm-on-cluster:
+            cluster-name: my-eks-helm-demo
+            enable-cluster-wide-admin-access: true
+            requires:
+              - aws-eks/create-cluster                    
+        - aws-eks/install-helm-chart:
+            chart: helm/expresscart
+            cluster-name: k8s
+            release-name: staging
+            requires:
+              - aws-eks/install-helm-on-cluster
           requires:
-            - aws-ecr/build_and_push_image
+            - aws-ecr/build_and_push_image  

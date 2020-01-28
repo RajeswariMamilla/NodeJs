@@ -4,8 +4,8 @@ orbs:
   #aws-eks: circleci/aws-eks@0.2.3
   #helm: circleci/helm@0.2.3
 workflows:
-  build-and-push:
-    jobs:
+  jobs:
+    build-and-push:
       - aws-ecr/build_and_push_image:
           account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
           repo: "${AWS_REPO}"

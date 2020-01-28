@@ -1,4 +1,28 @@
 version: 2.1
-jobs:
-  aws-eks/create-cluster:
-    cluster-name: my-eks-helm-demo
+orbs:
+  aws-ecr: circleci/aws-ecr@0.0.4
+  aws-eks: circleci/aws-eks@0.2.3
+  helm: circleci/helm@0.2.3
+workflows:
+    jobs:
+      build-and-push:
+        - aws-ecr/build_and_push_image:
+          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+          repo: "${rajeswari}"
+          region: ${AWS_DEFAULT_REGION}
+          tag: ${CIRCLE_BUILD_NUM}                    
+        - aws-eks/create-cluster:
+            cluster-name: my-eks-helm-demo              
+        - aws-eks/install-helm-on-cluster:
+            cluster-name: my-eks-helm-demo
+            enable-cluster-wide-admin-access: true
+            requires:
+              - aws-eks/create-cluster                    
+        - aws-eks/install-helm-chart:
+            chart: helm/expresscart
+            cluster-name: k8s
+            release-name: staging
+            requires:
+              - aws-eks/install-helm-on-cluster
+          requires:
+            - aws-ecr/build_and_push_image

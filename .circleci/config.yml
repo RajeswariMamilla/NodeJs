@@ -11,7 +11,7 @@ workflows:
           repo: "${AWS_REPO}"
           region: ${AWS_DEFAULT_REGION}
           tag: ${CIRCLE_BUILD_NUM}
-          #        - aws-eks/install-helm-chart:
+          #       - aws-eks/install-helm-chart:
           # chart: helm/expresscart
           # cluster-name: k8s
           # release-name: staging
